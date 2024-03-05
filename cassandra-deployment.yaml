@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cassandra
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cassandra
+  template:
+    metadata:
+      labels:
+        app: cassandra
+    spec:
+      containers:
+      - name: cassandra
+        image: bitnami/cassandra:latest
+        ports:
+        - containerPort: 9042
+        env:
+        - name: CASSANDRA_SEEDS
+          value: "cassandra-0.cassandra.default.svc.cluster.local"
+        - name: CASSANDRA_CLUSTER_NAME
+          value: "CassandraCluster"
+        - name: CASSANDRA_CQL_PORT_NUMBER
+          value: "9042"
